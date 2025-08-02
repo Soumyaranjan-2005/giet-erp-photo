@@ -3,81 +3,123 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GIET ERP Photo Viewer</title>
+  <title>GIET Photo Viewer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;1,400&display=swap');
-
-    :root {
-      --primary-color: #6366F1;
-      --accent-color: #3f83f8;
-      --text-color: #333333;
-      --link-color: #2563eb;
-      --background-color: #ffffff;
-      --light-gray: #f0f0f0;
-      --gray: #808080;
-      --dark-gray: #555555;
-    }
-
     * {
       box-sizing: border-box;
     }
 
     body {
+      margin: 0;
+      padding: 20px 0;
+      font-family: 'Inter', sans-serif;
       background: url('campus-overview-on-hill.jpg') no-repeat center center fixed;
       background-size: cover;
-      font-family: 'Inter', Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: var(--light-gray);
-      border-radius: 0.625rem;
+      display: flex;
+      width: 95%;
+      max-width: 600px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+      background-color: white;
+      animation: fadeSlideDown 1s ease forwards;
+      opacity: 0;
+      flex-direction: row;
     }
 
-    .container h1 {
-      color: var(--text-color);
-      font-size: 2rem;
-      font-weight: 700;
+    .left-panel {
+      background-color: #000;
+      color: #fff;
+      flex: 1;
+      padding: 20px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
 
-    label, select, input, button {
-      margin: 5px;
+    .left-panel img {
+      width: 95px;
+      margin-bottom: 10px;
     }
 
-    input, select {
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 0.375rem;
-      font-weight: 500;
+    .left-panel h2 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
     }
 
-    select {
-      font-weight: 600;
+    .left-panel p {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.1rem;
+      color: #ffe082;
     }
 
-    #startRoll, #endRoll {
-      width: 170px;
+    .right-panel {
+      flex: 1;
+      background-color: #fff;
+      padding: 20px 15px;
     }
 
-    button {
-      border: none;
-      border-radius: 0.375rem;
-      background-color: var(--primary-color);
-      color: var(--background-color);
-      transition: all 0.1s;
-      padding: 0.5rem 1.2rem;
-      font-size: 1rem;
+    .right-panel h1 {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 15px;
       font-weight: 1000;
     }
 
-    button:hover {
-      background-color: var(--accent-color);
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 8px;
+      border: 2px solid #6366F1;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .input-pair {
+      display: flex;
+      gap: 10px;
+    }
+
+    #startRoll, #endRoll {
+      width: 100%;
+    }
+
+    button {
+      margin-top: 10px;
+      width: 100%;
+      padding: 9px;
+      background-color: #6366F1;
+      color: white;
+      font-weight: bold;
+      font-size: 0.95rem;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #3f83f8;
     }
 
     .gallery {
@@ -85,90 +127,185 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
-      margin-top: 30px;
+      margin-top: 25px;
+      width: 95%;
     }
 
     .card {
-      width: 200px;
-      border: 1px solid;
+      width: 180px;
+      border: 1px solid #ddd;
       padding: 10px;
       border-radius: 8px;
+      background-color: #fff;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      background-color: white;
+      opacity: 0;
+      animation: slideLeftToRight 0.6s ease forwards;
     }
 
     .card img {
       width: 100%;
-      height: auto;
       border-radius: 4px;
     }
 
     .roll {
       margin-top: 8px;
-      font-weight: bold;
-      font-size: 1rem;
-      font-weight: 1000;
+      font-weight: 700;
+      text-align: center;
     }
 
-    .footer-copyright {
+    @keyframes slideLeftToRight {
+      from {
+        opacity: 0;
+        transform: translateX(-60px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeSlideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer-animated {
+      text-align: center;
+      margin-top: 18rem;
       color: white;
-      font-size: 1.1rem;
-      padding-bottom: 2rem;
-      margin-top: 25rem;
-      padding-top: 1.15rem;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      width: 100%;
+      font-family: 'Inter', sans-serif;
+      animation: fadeSlideUp 1.2s ease forwards;
+      opacity: 0;
     }
 
-    /* Responsive Mobile Style */
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       .container {
-        padding: 10px;
+        flex-direction: column;
+        width: 85%;
       }
 
-      label, select, input, button {
-        display: block;
-        width: 100%;
-        margin: 8px 0;
+      .left-panel, .right-panel {
+        padding: 5px 12px;
       }
 
-      #startRoll, #endRoll {
-        width: 100%;
+      .left-panel img {
+        width: 65px;
+      }
+
+      .left-panel h2 {
+        font-size: 1rem;
+      }
+
+      .left-panel p {
+        font-size: 0.8rem;
+      }
+
+      .right-panel h1 {
+        font-size: 1rem;
+        margin-bottom: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 8px;
+      }
+
+      select, input {
+        padding: 6px;
+        font-size: 0.9rem;
       }
 
       button {
+        padding: 8px;
+        font-size: 0.9rem;
+        margin-top: 10px;
+      }
+
+      .input-pair {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .card {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        width: 80%;
+      }
+
+      .card {
         width: 100%;
       }
     }
   </style>
 </head>
 <body>
+
   <div class="container">
-    <h1>GIET Student Photo Viewer</h1>
+    <div class="left-panel">
+      <img src="University-Logo-backup.png" alt="GIET Logo">
+      <h2>GIET UNIVERSITY</h2>
+      <p>All GIET students' photos<br>in one place.</p>
+    </div>
 
-    <label>Batch:</label>
-    <select id="batch">
-      <option value="22">2022</option>
-      <option value="23" selected>2023</option>
-      <option value="24">2024</option>
-      <option value="25">2025</option>
-    </select>
+    <div class="right-panel">
+      <h1>GIET Student Photo Viewer</h1>
+      <div class="form-group">
+        <label for="batch">Batch:</label>
+        <select id="batch">
+          <option value="22">2022</option>
+          <option value="23" selected>2023</option>
+          <option value="24">2024</option>
+          <option value="25">2025</option>
+        </select>
+      </div>
 
-    <label>Branch:</label>
-    <select id="branch">
-      <option value="CSE">CSE</option>
-      <option value="CSEAIML">CSEAIML</option>
-      <option value="CSEDS">CSEDS</option>
-      <option value="ECE">ECE</option>
-      <option value="BT">BT</option>
-      <option value="BAG">BAG</option>
-      <option value="ME">ME</option>
-      <option value="CV">CV</option>
-      <option value="EE">EE</option>
-    </select>
+      <div class="form-group">
+        <label for="branch">Branch:</label>
+        <select id="branch">
+          <option value="CSE">CSE</option>
+          <option value="CSEAIML">CSEAIML</option>
+          <option value="CSEDS">CSEDS</option>
+          <option value="ECE">ECE</option>
+          <option value="BT">BT</option>
+          <option value="BAG">BAG</option>
+          <option value="ME">ME</option>
+          <option value="CV">CV</option>
+          <option value="EE">EE</option>
+        </select>
+      </div>
 
-    <input type="number" id="startRoll" placeholder="Start Roll No (e.g., 1)" min="1" max="999">
-    <input type="number" id="endRoll" placeholder="End Roll No (e.g., 35)" min="1" max="999">
+      <div class="form-group input-pair">
+        <input type="number" id="startRoll" placeholder="Start Roll No (e.g., 1)" min="1" max="999">
+        <input type="number" id="endRoll" placeholder="End Roll No (e.g., 35)" min="1" max="999">
+      </div>
 
-    <button onclick="showPhotos()">Show Photos</button>
+      <button onclick="showPhotos()">Show Photos</button>
+    </div>
   </div>
 
   <div class="gallery" id="photoGallery"></div>
@@ -197,6 +334,7 @@
 
         const card = document.createElement("div");
         card.className = "card";
+        card.style.animationDelay = `${(i - start) * 0.1}s`;
 
         const img = document.createElement("img");
         img.src = imgUrl;
@@ -223,8 +361,9 @@
     });
   </script>
 
-  <div class="footer-copyright">
+  <div class="footer-animated">
     © 2025 - Presented by SRM. All rights reserved.
   </div>
+
 </body>
 </html>
